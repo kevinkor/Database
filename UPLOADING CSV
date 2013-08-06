@@ -1,0 +1,31 @@
+<?php
+include('config.php');
+
+  if(isset($_POST['Submit'])){
+		$file=$_FILES['file']['tmp_name'];
+		$handle = fopen($file,"r");
+		while (($fileop = fgetcsv($handle,1000,","))!== false){
+
+			$name=$fileop[0];
+			$date=$fileop[1];
+
+			$sql = mysql_query ("INSERT INTO data_123 (`Name`,`Date`) VALUES('$name','$date')");
+		}
+	}
+	?>
+	<a href="DisplayData.php">Display Data</a><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Upload Your CSV File</title>	
+	</head>
+	<body>
+		<form action="parsing.php" method="post" enctype ="multipart/form-data">
+		Choose your file: <br>
+		<input name="file" type="file"/>
+		<input type="Submit" name="Submit" value="Submit"/>
+	</form>
+	</body>
+</html>
+
